@@ -18,8 +18,10 @@ export function formatNumber(value: number, decimals = 2): string {
 }
 
 export function parseNumber(input: string): number {
-  const normalized = input.replace(/\s/g, '').replace(',', '.');
-  const value = Number(normalized);
+  let s = input.trim().replace(/\s/g, '');
+  s = s.replace(/\.(?=\d{3}(\D|$))/g, '');
+  s = s.replace(',', '.');
+  const value = Number(s);
   return Number.isFinite(value) ? value : 0;
 }
 

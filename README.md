@@ -41,5 +41,6 @@ Fundo branco + cinzento `#F5F5F5` + texto `#212121` + estrelas âmbar `#FFC107` 
 npx tsc --noEmit   # typecheck
 npx expo lint      # lint
 npx expo-doctor    # diagnóstico de dependências
-CI=1 npx expo export --platform android   # bundle de fumo
+CI=1 npx expo export --platform android   # bundle de produção
+npm test                              # 47 testes do motor (calculadora, ferramentas, assistente)
 ```
