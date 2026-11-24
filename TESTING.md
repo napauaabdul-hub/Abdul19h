@@ -13,6 +13,14 @@ O `--tunnel` pede login Expo e o callback vai para `localhost` do Codespace (ina
 
 Se um dia precisar de login Expo (ex.: EAS build), faça-o **dentro do navegador do próprio Codespace**: `npx expo login`, abrir o URL impresso no navegador interno do VS Code (Simple Browser), aprovar, e o terminal fica autenticado.
 
+### Troubleshooting "Something went wrong" no Expo Go
+
+1. Atualize o **Expo Go** na Play Store (tem de suportar SDK 58) e no app faça *shake* → **Reload** (ou limpe a cache nas definições do Expo Go).
+2. No Codespace, pare e volte a iniciar com cache limpa: `npx expo start --port 8081 --clear`.
+3. Use o URL **exato** que aparece no terminal na linha `Metro waiting on exp://...` — não monte o URL à mão. Se mostrar um IP de rede local (172.x/192.168.x), isso não é alcançável do telemóvel: nesse caso copie o **Forwarded Address** da aba **Ports** (8081, Public), ex. `https://abc123-8081.app.github.dev`, e no Expo Go use `exp://abc123-8081.app.github.dev`.
+4. Se continuar a falhar, envie: (a) o conteúdo de **View error log** no Expo Go e (b) o output do terminal do Codespace depois de o telemóvel tentar abrir — um deles mostra o erro real.
+5. Alternativa fiável: login dentro do Codespace (ponto acima) e depois `npx expo start --tunnel` — o URL `exp://....exp.direct` é feito para telemóvel.
+
 ## 1. Preparar o telemóvel
 
 Opção A — Expo Go (rápido, para testes de UI):
