@@ -2,6 +2,17 @@
 
 Sem emulador na sandbox, a verificação automática cobre: `npm test` (47 testes do motor), `npx tsc --noEmit`, `npx expo lint`, `npx expo-doctor` (20/20), smoke test do bundle Android via Metro (HTTP 200, 6,0 MB dev) e `CI=1 npx expo export --platform android` (bundle Hermes 3,3 MB — todas as rotas compilam).
 
+## 0. Codespaces no telemóvel (sem PC e sem login Expo)
+
+O `--tunnel` pede login Expo e o callback vai para `localhost` do Codespace (inacessível do telemóvel). **Não use `--tunnel`**:
+
+1. No Codespace (branch `vibe/napaua-entrega`), no terminal: `npx expo start --port 8081`
+2. Aba **Ports** (ao lado do Terminal) → porta **8081** → confirmar visibilidade **Public** (o `.devcontainer` já a configura) → copiar o URL público, ex.: `https://abc123-8081.app.github.dev`
+3. No Expo Go no telemóvel: **Enter URL manually** → colar `exp://abc123-8081.app.github.dev` (trocar `https://` por `exp://`)
+4. A app carrega. Sem conta Expo necessária.
+
+Se um dia precisar de login Expo (ex.: EAS build), faça-o **dentro do navegador do próprio Codespace**: `npx expo login`, abrir o URL impresso no navegador interno do VS Code (Simple Browser), aprovar, e o terminal fica autenticado.
+
 ## 1. Preparar o telemóvel
 
 Opção A — Expo Go (rápido, para testes de UI):
