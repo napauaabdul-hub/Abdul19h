@@ -24,6 +24,8 @@ npx expo start --ios
 - `src/lib/storage.ts` + `src/context/` — persistência local (AsyncStorage): utilizadores, projetos, pedidos, plantas guardadas. Funciona offline; autenticação local de demonstração (a integração Supabase entra como fase seguinte, sem mudar as telas).
 - `src/lib/assistant.ts` + `src/app/assistente.tsx` — **Fase 5: assistente de obra (IA local)**. Motor baseado em regras que só cita fórmulas/resultados calculados (nunca inventa quantidades), explica materiais e etapas, ajuda a preencher e deteta dados em falta.
 - `src/app/(admin)/` — **Fase 6: painel administrativo protegido** (login próprio, sessão em AsyncStorage): gestão de serviços, preços em MT, parâmetros/desperdícios da calculadora, plantas, pedidos (7 estados) e utilizadores (suspender/reativar). Acedido em Conta → "Painel administrativo". Conta inicial: `admin@napauabuild.mz` / `admin123`.
+- `src/app/ferramentas/` + `src/lib/quickcalc.ts` — **Funcionalidades futuras (secção 17)**: 9 calculadoras dedicadas (muros, lajes, escadas, vigas e pilares, reboco, pintura, pavimentos, blocos, vigotas e abobadilhas), comparação de preços entre lojas (`/comparador`), fornecedores por bairro em Maputo (`/fornecedores`), acompanhamento de obras com as 16 etapas (`/obras`), galeria de obras concluídas (`/galeria`) e assistente por voz (botão "ouvir" no `/assistente`, via expo-speech).
+- **Aluguer de prumos**: serviço `aluguer-prumos` no catálogo com `disponivel: false` — aparece com selo "Indisponível", sem botão de solicitar/WhatsApp e bloqueado no formulário de pedido.
 
 ## Paleta (alinhada à logo NAPAUA BUILD)
 

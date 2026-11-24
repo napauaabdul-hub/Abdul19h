@@ -52,10 +52,17 @@ export default function ServicoDetalhe() {
           <Text style={styles.precoText}>{servico.precoReferencia}</Text>
         </View>
       </View>
-      <View style={styles.ratingRow}>
-        <Stars rating={servico.rating} size={16} />
-        <Text style={styles.ratingText}>{servico.avaliacoes} avaliações de clientes</Text>
-      </View>
+      {sv.disponivel === false ? (
+        <View style={styles.indisp}>
+          <Ionicons name="time-outline" size={16} color={colors.orange} />
+          <Text style={styles.indispText}>Serviço indisponível de momento — em preparação. Fique atento às novidades.</Text>
+        </View>
+      ) : (
+        <View style={styles.ratingRow}>
+          <Stars rating={servico.rating} size={16} />
+          <Text style={styles.ratingText}>{servico.avaliacoes} avaliações de clientes</Text>
+        </View>
+      )}
       <Text style={styles.desc}>{servico.descricao}</Text>
       <Card style={styles.card}>
         <Text style={styles.cardTitle}>Características</Text>
@@ -66,9 +73,15 @@ export default function ServicoDetalhe() {
           </View>
         ))}
       </Card>
-      <Button label="Solicitar serviço" onPress={() => router.push({ pathname: '/servicos/solicitar', params: { servico: servico.id } })} />
-      <View style={{ height: 10 }} />
-      <Button label="Contactar pelo WhatsApp" variant="teal" onPress={whatsapp} />
+      {sv.disponivel === false ? (
+        <Button label="Indisponível de momento" variant="ghost" onPress={() => {}} disabled />
+      ) : (
+        <>
+          <Button label="Solicitar serviço" onPress={() => router.push({ pathname: '/servicos/solicitar', params: { servico: servico.id } })} />
+          <View style={{ height: 10 }} />
+          <Button label="Contactar pelo WhatsApp" variant="teal" onPress={whatsapp} />
+        </>
+      )}
     </ScrollView>
   );
 }
@@ -87,6 +100,16 @@ const styles = StyleSheet.create({
   },
   titulo: { fontSize: 22, fontWeight: '800', color: colors.text },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
+  indisp: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 12,
+    backgroundColor: '#FDEBDD',
+    borderRadius: 12,
+    padding: 12,
+  },
+  indispText: { flex: 1, fontSize: 12, fontWeight: '700', color: colors.orange, lineHeight: 16 },
   ratingText: { fontSize: 12, color: colors.textMuted, fontWeight: '600' },
   catRow: { flexDirection: 'row', gap: 8, marginTop: 8, flexWrap: 'wrap' },
   catChip: { backgroundColor: colors.gray, borderRadius: 999, paddingHorizontal: 12, height: 30, justifyContent: 'center' },

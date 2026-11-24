@@ -10,6 +10,8 @@ import {
   User,
   HousePlan,
   MaterialPrice,
+  Obra,
+  StageId,
 } from './types';
 import { CalcParameters } from './parameters';
 
@@ -26,6 +28,7 @@ const KEYS = {
   params: 'cf_params_v2',
   admins: 'cf_admins',
   adminSession: 'cf_admin_session',
+  obras: 'cf_obras',
 } as const;
 
 export async function readJson<T>(key: string, fallback: T): Promise<T> {
@@ -208,6 +211,31 @@ export async function setAdminSession(session: { adminId: string } | null): Prom
   } else {
     await writeJson(KEYS.adminSession, session);
   }
+}
+
+export async function getObras(): Promise<Obra[]> {
+  return readJson<Obra[]>(KEYS.obras, []);
+}
+
+export async function saveObras(obras: Obra[]): Promise<void> {
+  await writeJson(KEYS.obras, obras);
+}
+
+export async function toggleEtapaObra(obraId: string, etapa: StageId): Promise<void> {
+  const all = await getObras();
+  await writeJson(
+    KEYS.obras,
+    all.map((o) =>
+      o.id === obraId
+        ? {
+            ...o,
+            etapasFeitas: o.etapasFeitas.includes(etapa)
+              ? o.etapasFeitas.filter((e) => e !== etapa)
+              : [...o.etapasFeitas, etapa],
+          }
+        : o,
+    ),
+  );
 }
 
 export function newId(): string {

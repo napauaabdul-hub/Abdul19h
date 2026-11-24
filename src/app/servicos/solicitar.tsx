@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { SERVICES } from '../../lib/data/services';
+import { getServiceById } from '../../lib/catalog';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { Screen } from '../../components/Screen';
@@ -11,7 +11,16 @@ import { colors } from '../../lib/theme';
 
 export default function SolicitarServico() {
   const { servico: servicoId } = useLocalSearchParams<{ servico?: string }>();
-  const servico = SERVICES.find((s) => s.id === servicoId);
+  const [servico, setServico] = useState<{ id: string; titulo: string; disponivel?: boolean } | undefined>(undefined);
+  const [bloqueado, setBloqueado] = useState(false);
+
+  useEffect(() => {
+    getServiceById(servicoId ?? '').then((s) => {
+      setServico(s);
+      if (s?.disponivel === false) setBloqueado(true);
+    });
+  }, [servicoId]);
+
   const [nome, setNome] = useState('');
   const [contacto, setContacto] = useState('');
   const [localizacao, setLocalizacao] = useState('');
@@ -19,6 +28,10 @@ export default function SolicitarServico() {
   const [enviando, setEnviando] = useState(false);
 
   async function enviar() {
+    if (bloqueado) {
+      Alert.alert('Serviço indisponível', 'Este serviço ainda não está disponível. Tente mais tarde.');
+      return;
+    }
     if (!nome.trim() || !contacto.trim()) {
       Alert.alert('Dados em falta', 'Indique o seu nome e um contacto.');
       return;
@@ -52,7 +65,10 @@ export default function SolicitarServico() {
       <Input label="Contacto" value={contacto} onChangeText={setContacto} placeholder="Telefone ou WhatsApp" keyboardType="phone-pad" />
       <Input label="Localização da obra" value={localizacao} onChangeText={setLocalizacao} placeholder="Ex.: Matola, bairro..." />
       <Input label="Descrição" value={descricao} onChangeText={setDescricao} placeholder="Descreva o trabalho pretendido" multiline />
-      <Button label="Enviar pedido" onPress={enviar} loading={enviando} />
+      {bloqueado ? (
+        <Text style={styles.aviso}>Este serviço está indisponível de momento.</Text>
+      ) : null}
+      <Button label="Enviar pedido" onPress={enviar} loading={enviando} disabled={bloqueado} />
     </Screen>
   );
 }
@@ -60,4 +76,5 @@ export default function SolicitarServico() {
 const styles = StyleSheet.create({
   titulo: { fontSize: 22, fontWeight: '800', color: colors.text },
   sub: { fontSize: 13, color: colors.textMuted, marginTop: 4, marginBottom: 14 },
+  aviso: { fontSize: 12, fontWeight: '700', color: colors.orange, marginBottom: 10 },
 });

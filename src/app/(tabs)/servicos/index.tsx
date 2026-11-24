@@ -48,7 +48,13 @@ export default function Servicos() {
             <View style={{ flex: 1 }}>
               <Text style={styles.titulo}>{item.titulo}</Text>
               <Text style={styles.cat}>{item.categoria}</Text>
-              <Stars rating={item.rating} />
+              {item.disponivel === false ? (
+                <View style={styles.indisp}>
+                  <Text style={styles.indispText}>Indisponível</Text>
+                </View>
+              ) : (
+                <Stars rating={item.rating} />
+              )}
               <Text style={styles.preco} numberOfLines={1}>{item.precoReferencia}</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
@@ -71,6 +77,8 @@ const styles = StyleSheet.create({
   titulo: { fontSize: 15, fontWeight: '800', color: colors.text },
   cat: { fontSize: 12, color: colors.teal, fontWeight: '700', marginTop: 1 },
   preco: { fontSize: 12, color: colors.orange, fontWeight: '700', marginTop: 2 },
+  indisp: { alignSelf: 'flex-start', backgroundColor: colors.gray, borderRadius: 999, paddingHorizontal: 8, height: 22, justifyContent: 'center', marginTop: 2 },
+  indispText: { fontSize: 10, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },
   fab: {
     position: 'absolute',
     right: 16,

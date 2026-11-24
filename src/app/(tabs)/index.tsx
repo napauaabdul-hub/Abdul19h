@@ -19,6 +19,7 @@ const CATEGORIAS = [
   { titulo: 'Vigotas e abobadilhas', icon: 'layers', rota: '/servicos/vigotas-abobadilhas' },
   { titulo: 'Plantas', icon: 'pencil-ruler', rota: '/plantas' },
   { titulo: 'Orçamentos', icon: 'document-text', rota: '/(tabs)/orcamentos' },
+  { titulo: 'Ferramentas', icon: 'construct', rota: '/ferramentas' },
 ] as const;
 
 function saudacao(): string {

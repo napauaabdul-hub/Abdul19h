@@ -106,6 +106,39 @@ export interface Service {
   whatsapp: string;
   rating: number;
   avaliacoes: number;
+  disponivel?: boolean;
+}
+
+export interface Fornecedor {
+  id: string;
+  nome: string;
+  tipo: string;
+  bairro: string;
+  cidade: string;
+  telefone: string;
+  whatsapp: string;
+  nota: number;
+}
+
+export interface Obra {
+  id: string;
+  nome: string;
+  local: string;
+  cliente: string;
+  iniciadoEm: number;
+  etapasFeitas: StageId[];
+}
+
+export interface ObraConcluida {
+  id: string;
+  titulo: string;
+  local: string;
+  tipo: string;
+  area: number;
+  ano: number;
+  icon: string;
+  cor: string;
+  descricao: string;
 }
 
 export interface ServiceRequest {

@@ -70,4 +70,21 @@ export const SERVICES: Service[] = [
   },
 ];
 
-export const SERVICE_CATEGORIES = ['Construção', 'Pré-fabricados', 'Materiais', 'Projectos', 'Orçamentos'];
+export const SERVICE_CATEGORIES = ['Construção', 'Pré-fabricados', 'Materiais', 'Projectos', 'Orçamentos', 'Aluguer'];
+
+export const ALUGUER_PRUMOS: Service = {
+  id: 'aluguer-prumos',
+  titulo: 'Aluguer de prumos',
+  categoria: 'Aluguer',
+  descricao:
+    'Aluguer de prumos e andaimes metálicos para obras, com entrega e recolha no local. Serviço em preparación — fique atento às novidades.',
+  icon: 'grid',
+  destaques: ['Prumos metálicos', 'Andaimes', 'Entrega na obra', 'Disponível em breve'],
+  precoReferencia: 'Sob consulta (indisponível de momento)',
+  whatsapp: WHATSAPP,
+  rating: 0,
+  avaliacoes: 0,
+  disponivel: false,
+};
+
+SERVICES.push(ALUGUER_PRUMOS);

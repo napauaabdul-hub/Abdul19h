@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Speech from 'expo-speech';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCalc } from '../context/calc';
 import { responder, sugestoes } from '../lib/assistant';
@@ -57,7 +58,17 @@ export default function Assistente() {
         renderItem={({ item }) => (
           <View style={[styles.balao, item.autor === 'user' ? styles.user : styles.bot]}>
             {item.autor === 'bot' ? (
-              <Ionicons name="construct" size={15} color={colors.primary} style={{ marginBottom: 4 }} />
+              <View style={styles.botHead}>
+                <Ionicons name="construct" size={15} color={colors.primary} />
+                <Pressable
+                  hitSlop={8}
+                  onPress={() => Speech.speak(item.texto, { language: 'pt-PT' })}
+                  style={styles.voz}
+                >
+                  <Ionicons name="volume-high-outline" size={16} color={colors.primary} />
+                  <Text style={styles.vozText}>ouvir</Text>
+                </Pressable>
+              </View>
             ) : null}
             <Text style={[styles.texto, item.autor === 'user' ? styles.textoUser : null]}>{item.texto}</Text>
           </View>
@@ -101,6 +112,9 @@ const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.gray },
   balao: { maxWidth: '86%', borderRadius: radius.lg, padding: 12, marginBottom: 10 },
   bot: { alignSelf: 'flex-start', backgroundColor: colors.white, borderWidth: 1, borderColor: colors.border },
+  botHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 },
+  voz: { flexDirection: 'row', alignItems: 'center', gap: 3 },
+  vozText: { fontSize: 11, fontWeight: '700', color: colors.primary },
   user: { alignSelf: 'flex-end', backgroundColor: colors.primary },
   texto: { fontSize: 14, color: colors.text, lineHeight: 20 },
   textoUser: { color: colors.white },
