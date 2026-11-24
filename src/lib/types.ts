@@ -162,5 +162,6 @@ export interface User {
   telefone: string;
   email: string;
   senhaHash: string;
+  suspenso?: boolean;
   criadoEm: number;
 }

@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { User } from '../lib/types';
-import { getSession, getUsers, newId, saveUsers, setSession } from '../lib/storage';
+import { getSession, getUsers, hashSenha, newId, saveUsers, setSession } from '../lib/storage';
 
 type AuthState =
   | { status: 'loading' }
@@ -18,16 +18,6 @@ interface AuthContextValue {
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-
-export function hashSenha(senha: string): string {
-  let h1 = 0x811c9dc5;
-  let h2 = 0x01000193;
-  for (let i = 0; i < senha.length; i++) {
-    h1 = Math.imul(h1 ^ senha.charCodeAt(i), 0x01000193) >>> 0;
-    h2 = Math.imul(h2 ^ senha.charCodeAt(senha.length - 1 - i), 0x85ebca6b) >>> 0;
-  }
-  return h1.toString(16).padStart(8, '0') + h2.toString(16).padStart(8, '0');
-}
 
 function normalizar(v: string): string {
   return v.trim().toLowerCase().replace(/\s+/g, '');
@@ -60,6 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       (u) => normalizar(u.email) === alvo || normalizar(u.telefone) === alvo,
     );
     if (!user) return { ok: false, erro: 'Conta não encontrada. Verifique o telefone/email.' };
+    if (user.suspenso) return { ok: false, erro: 'Esta conta foi suspensa por abuso. Contacte o administrador.' };
     if (user.senhaHash !== hashSenha(senha)) return { ok: false, erro: 'Palavra-passe incorreta.' };
     await setSession({ userId: user.id });
     setState({ status: 'user', user });

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { SERVICES } from '../../lib/data/services';
+import { getServiceById } from '../../lib/catalog';
+import { Service } from '../../lib/types';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Screen } from '../../components/Screen';
@@ -12,13 +13,21 @@ import { colors, radius } from '../../lib/theme';
 
 export default function ServicoDetalhe() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const servico = SERVICES.find((s) => s.id === id);
+  const [servico, setServico] = useState<Service | undefined>(undefined);
+  const [carregado, setCarregado] = useState(false);
 
-  if (!servico) {
+  useEffect(() => {
+    getServiceById(id).then((s) => {
+      setServico(s);
+      setCarregado(true);
+    });
+  }, [id]);
+
+  if (!carregado || !servico) {
     return (
       <Screen>
         <SetTitle title="Serviço" />
-        <Text style={{ color: colors.textMuted }}>Serviço não encontrado.</Text>
+        <Text style={{ color: colors.textMuted }}>{carregado ? 'Serviço não encontrado.' : 'A carregar…'}</Text>
       </Screen>
     );
   }

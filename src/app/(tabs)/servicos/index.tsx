@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { SERVICES, SERVICE_CATEGORIES } from '../../../lib/data/services';
+import { SERVICE_CATEGORIES } from '../../../lib/data/services';
+import { getServices } from '../../../lib/catalog';
+import { Service } from '../../../lib/types';
 import { Card } from '../../../components/Card';
 import { Chip } from '../../../components/Chip';
 import { EmptyState } from '../../../components/EmptyState';
@@ -11,9 +13,17 @@ import { colors, radius, shadow } from '../../../lib/theme';
 
 export default function Servicos() {
   const [cat, setCat] = useState<string>('Todas');
+  const [servicos, setServicos] = useState<Service[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      getServices().then(setServicos);
+    }, []),
+  );
+
   const lista = useMemo(
-    () => (cat === 'Todas' ? SERVICES : SERVICES.filter((s) => s.categoria === cat)),
-    [cat],
+    () => (cat === 'Todas' ? servicos : servicos.filter((s) => s.categoria === cat)),
+    [cat, servicos],
   );
 
   return (

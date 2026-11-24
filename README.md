@@ -22,6 +22,8 @@ npx expo start --ios
 - `src/lib/materials.ts` — catálogo de materiais com preços de referência em MT (editáveis no ecrã de orçamento).
 - `src/lib/export.ts` — exportação PDF (expo-print), Excel/CSV (expo-file-system) e partilha WhatsApp.
 - `src/lib/storage.ts` + `src/context/` — persistência local (AsyncStorage): utilizadores, projetos, pedidos, plantas guardadas. Funciona offline; autenticação local de demonstração (a integração Supabase entra como fase seguinte, sem mudar as telas).
+- `src/lib/assistant.ts` + `src/app/assistente.tsx` — **Fase 5: assistente de obra (IA local)**. Motor baseado em regras que só cita fórmulas/resultados calculados (nunca inventa quantidades), explica materiais e etapas, ajuda a preencher e deteta dados em falta.
+- `src/app/(admin)/` — **Fase 6: painel administrativo protegido** (login próprio, sessão em AsyncStorage): gestão de serviços, preços em MT, parâmetros/desperdícios da calculadora, plantas, pedidos (7 estados) e utilizadores (suspender/reativar). Acedido em Conta → "Painel administrativo". Conta inicial: `admin@napauabuild.mz` / `admin123`.
 
 ## Paleta (alinhada à logo NAPAUA BUILD)
 

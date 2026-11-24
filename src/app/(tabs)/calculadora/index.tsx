@@ -55,6 +55,8 @@ export default function CalculadoraHome() {
                 progressivos por etapa.
               </Text>
               <Button label="Novo cálculo" variant="orange" onPress={novo} />
+              <View style={{ height: 10 }} />
+              <Button label="Assistente de obra (IA)" variant="teal" onPress={() => router.push('/assistente')} />
             </View>
             <Text style={styles.section}>Projectos guardados</Text>
           </View>

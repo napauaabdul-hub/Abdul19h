@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { HOUSE_PLANS } from '../../lib/data/plans';
+import { getPlanById } from '../../lib/catalog';
+import { HousePlan } from '../../lib/types';
 import { useCalc } from '../../context/calc';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
@@ -14,19 +15,24 @@ import { colors } from '../../lib/theme';
 
 export default function PlantaDetalhe() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const planta = HOUSE_PLANS.find((p) => p.id === id);
+  const [planta, setPlanta] = useState<HousePlan | undefined>(undefined);
+  const [carregado, setCarregado] = useState(false);
   const { setDraft } = useCalc();
   const [guardada, setGuardada] = useState(false);
 
   useEffect(() => {
+    getPlanById(id).then((p) => {
+      setPlanta(p);
+      setCarregado(true);
+    });
     getSavedPlans().then((ids) => setGuardada(ids.includes(id)));
   }, [id]);
 
-  if (!planta) {
+  if (!carregado || !planta) {
     return (
       <Screen>
         <SetTitle title="Planta" />
-        <Text style={{ color: colors.textMuted }}>Planta não encontrada.</Text>
+        <Text style={{ color: colors.textMuted }}>{carregado ? 'Planta não encontrada.' : 'A carregar…'}</Text>
       </Screen>
     );
   }

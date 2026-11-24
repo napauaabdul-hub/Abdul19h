@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { HOUSE_PLANS, PLAN_CATEGORIES } from '../../lib/data/plans';
+import { PLAN_CATEGORIES } from '../../lib/data/plans';
+import { getPlans } from '../../lib/catalog';
+import { HousePlan } from '../../lib/types';
 import { Card } from '../../components/Card';
 import { Chip } from '../../components/Chip';
 import { FloorPlan } from '../../components/FloorPlan';
@@ -10,9 +12,17 @@ import { colors } from '../../lib/theme';
 
 export default function Plantas() {
   const [cat, setCat] = useState<string>('Todas');
+  const [planos, setPlanos] = useState<HousePlan[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      getPlans().then(setPlanos);
+    }, []),
+  );
+
   const lista = useMemo(
-    () => (cat === 'Todas' ? HOUSE_PLANS : HOUSE_PLANS.filter((p) => p.categoria === cat)),
-    [cat],
+    () => (cat === 'Todas' ? planos : planos.filter((p) => p.categoria === cat)),
+    [cat, planos],
   );
 
   return (

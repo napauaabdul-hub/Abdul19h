@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ import { Screen } from '../../components/Screen';
 import { SetTitle } from '../../components/SetTitle';
 import { BudgetTable } from '../../components/BudgetTable';
 import { exportarCsv, exportarPdf, partilharArquivo, partilharWhatsApp } from '../../lib/export';
-import { precoDe } from '../../lib/materials';
+import { getPrices } from '../../lib/catalog';
 import { newId, saveProject } from '../../lib/storage';
 import { Budget, SavedProject } from '../../lib/types';
 import { parseNumber } from '../../lib/format';
@@ -18,13 +18,23 @@ import { colors } from '../../lib/theme';
 export default function Orcamento() {
   const { draft, resultado } = useCalc();
   const [nome, setNome] = useState(`Casa ${draft.tipo} — ${(draft.comprimento * draft.largura).toFixed(0)} m²`);
-  const [precos, setPrecos] = useState<Record<string, number>>(() => {
-    const inicial: Record<string, number> = {};
-    for (const item of resultado.resumo) {
-      inicial[item.material + '|' + item.unidade] = precoDe(item.material, item.unidade);
-    }
-    return inicial;
-  });
+  const [precos, setPrecos] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    let ativo = true;
+    getPrices().then((lista) => {
+      if (!ativo) return;
+      const inicial: Record<string, number> = {};
+      for (const item of resultado.resumo) {
+        const encontrado = lista.find((m) => m.nome === item.material && m.unidade === item.unidade);
+        inicial[item.material + '|' + item.unidade] = encontrado ? encontrado.precoMT : 0;
+      }
+      setPrecos(inicial);
+    });
+    return () => {
+      ativo = false;
+    };
+  }, [resultado]);
   const [transporte, setTransporte] = useState('0');
   const [aExportar, setAExportar] = useState(false);
 

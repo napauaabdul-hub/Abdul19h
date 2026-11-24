@@ -38,6 +38,7 @@ export default function Conta() {
     { icon: 'pencil-ruler-outline', titulo: 'Plantas guardadas', detalhe: `${contagens.plantas}`, onPress: () => router.push('/plantas') },
     { icon: 'notifications-outline', titulo: 'Notificações', onPress: () => router.push('/notificacoes') },
     { icon: 'key-outline', titulo: 'Recuperar acesso', onPress: () => router.push('/(auth)/forgot') },
+    { icon: 'shield-checkmark-outline', titulo: 'Painel administrativo', detalhe: 'Serviços, preços, parâmetros, pedidos', onPress: () => router.push('/(admin)/login') },
   ];
 
   function terminar() {

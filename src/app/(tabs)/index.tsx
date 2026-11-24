@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +8,8 @@ import { Logo } from '../../components/Logo';
 import { Card } from '../../components/Card';
 import { SectionHeader } from '../../components/SectionHeader';
 import { Stars } from '../../components/Stars';
-import { SERVICES } from '../../lib/data/services';
+import { getServices } from '../../lib/catalog';
+import { Service } from '../../lib/types';
 import { colors, radius, shadow } from '../../lib/theme';
 
 const CATEGORIAS = [
@@ -31,7 +32,12 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   const { state } = useAuth();
   const [pesquisa, setPesquisa] = useState('');
+  const [recomendados, setRecomendados] = useState<Service[]>([]);
   const nome = state.status === 'user' ? state.user.nome.split(' ')[0] : null;
+
+  useEffect(() => {
+    getServices().then((s) => setRecomendados(s.slice(0, 4)));
+  }, []);
 
   return (
     <ScrollView style={[styles.root, { paddingTop: insets.top }]} showsVerticalScrollIndicator={false}>
@@ -100,7 +106,7 @@ export default function Home() {
         onAction={() => router.push('/(tabs)/servicos')}
       />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12, paddingBottom: 8 }}>
-        {SERVICES.slice(0, 4).map((s) => (
+        {recomendados.map((s) => (
           <Card key={s.id} onPress={() => router.push(`/servicos/${s.id}`)} style={styles.svc}>
             <View style={styles.svcIcon}>
               <Ionicons name={s.icon as never} size={26} color={colors.white} />

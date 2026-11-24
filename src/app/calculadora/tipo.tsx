@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useCalc } from '../../context/calc';
-import { HOUSE_PLANS, HOUSE_TYPES } from '../../lib/data/plans';
+import { HOUSE_TYPES } from '../../lib/data/plans';
+import { getPlans } from '../../lib/catalog';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { FloorPlan } from '../../components/FloorPlan';
 import { Screen } from '../../components/Screen';
 import { SetTitle } from '../../components/SetTitle';
-import { HouseType } from '../../lib/types';
+import { HousePlan, HouseType } from '../../lib/types';
 import { colors, radius } from '../../lib/theme';
 
 export default function Tipo() {
   const { draft, setDraft } = useCalc();
+  const [planos, setPlanos] = useState<HousePlan[]>([]);
+
+  useEffect(() => {
+    getPlans().then(setPlanos);
+  }, []);
 
   function escolher(tipo: HouseType) {
-    const plano = HOUSE_PLANS.find((p) => p.id === tipo);
+    const plano = planos.find((p) => p.id === tipo);
     setDraft({
       tipo,
       ...(plano
@@ -40,7 +46,7 @@ export default function Tipo() {
       <View style={styles.list}>
         {HOUSE_TYPES.map((t) => {
           const ativo = draft.tipo === t.id;
-          const plano = HOUSE_PLANS.find((p) => p.id === t.id);
+          const plano = planos.find((p) => p.id === t.id);
           return (
             <Card key={t.id} onPress={() => escolher(t.id)} style={[styles.card, ativo ? styles.cardAtivo : null]}>
               <View style={styles.cardRow}>

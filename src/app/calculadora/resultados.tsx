@@ -46,6 +46,8 @@ export default function Resultados() {
       <StageResults resultado={resultado} />
       <Button label="Orçamento em MT" variant="orange" onPress={() => router.push('/calculadora/orcamento')} />
       <View style={{ height: 10 }} />
+      <Button label="Perguntar ao assistente" variant="teal" onPress={() => router.push('/assistente')} />
+      <View style={{ height: 10 }} />
       <Button label="Guardar projeto" variant="outline" onPress={guardar} loading={guardando} />
       <View style={{ height: 10 }} />
       <Button

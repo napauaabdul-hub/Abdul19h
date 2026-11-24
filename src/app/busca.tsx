@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { SERVICES } from '../lib/data/services';
-import { HOUSE_PLANS } from '../lib/data/plans';
+import { getPlans, getServices } from '../lib/catalog';
+import { HousePlan, Service } from '../lib/types';
 import { Card } from '../components/Card';
 import { EmptyState } from '../components/EmptyState';
 import { Screen } from '../components/Screen';
@@ -28,19 +28,26 @@ const FUNCIONALIDADES: Resultado[] = [
 export default function Busca() {
   const params = useLocalSearchParams<{ q?: string }>();
   const [q, setQ] = useState(params.q ?? '');
+  const [servicos, setServicos] = useState<Service[]>([]);
+  const [plantas, setPlantas] = useState<HousePlan[]>([]);
+
+  useEffect(() => {
+    getServices().then(setServicos);
+    getPlans().then(setPlantas);
+  }, []);
 
   const resultados = useMemo(() => {
     const termo = q.trim().toLowerCase();
     if (!termo) return FUNCIONALIDADES;
-    const servicos: Resultado[] = SERVICES.filter(
+    const serv: Resultado[] = servicos.filter(
       (s) => s.titulo.toLowerCase().includes(termo) || s.descricao.toLowerCase().includes(termo) || s.categoria.toLowerCase().includes(termo),
     ).map((s) => ({ tipo: 'Serviço', titulo: s.titulo, sub: s.categoria, icon: s.icon, rota: `/servicos/${s.id}` }));
-    const plantas: Resultado[] = HOUSE_PLANS.filter(
+    const pl: Resultado[] = plantas.filter(
       (p) => p.nome.toLowerCase().includes(termo) || p.categoria.toLowerCase().includes(termo) || p.descricao.toLowerCase().includes(termo),
     ).map((p) => ({ tipo: 'Planta', titulo: p.nome, sub: `${p.area} m² · ${p.quartos} quartos`, icon: 'home', rota: `/plantas/${p.id}` }));
     const funcs = FUNCIONALIDADES.filter((f) => f.titulo.toLowerCase().includes(termo) || f.sub.toLowerCase().includes(termo));
-    return [...funcs, ...servicos, ...plantas];
-  }, [q]);
+    return [...funcs, ...serv, ...pl];
+  }, [q, servicos, plantas]);
 
   return (
     <Screen>

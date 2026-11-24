@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { CalcInput, CalcResult } from '../lib/types';
 import { computeAll, STAGES } from '../lib/calculator';
+import { getParams } from '../lib/catalog';
+import { CalcParameters, DEFAULT_PARAMETERS } from '../lib/parameters';
 
 export const ALL_STAGE_IDS = STAGES.map((s) => s.id);
 
@@ -31,6 +33,7 @@ interface CalcContextValue {
   setDraft: (patch: Partial<CalcInput>) => void;
   toggleEtapa: (id: CalcInput['etapas'][number]) => void;
   resultado: CalcResult;
+  params: CalcParameters;
   reset: () => void;
 }
 
@@ -38,6 +41,11 @@ const CalcContext = createContext<CalcContextValue | null>(null);
 
 export function CalcProvider({ children }: { children: React.ReactNode }) {
   const [draft, setDraftState] = useState<CalcInput>(defaultInput());
+  const [params, setParams] = useState<CalcParameters>(DEFAULT_PARAMETERS);
+
+  useEffect(() => {
+    getParams().then(setParams).catch(() => setParams(DEFAULT_PARAMETERS));
+  }, []);
 
   const setDraft = (patch: Partial<CalcInput>) => setDraftState((d) => ({ ...d, ...patch }));
 
@@ -47,13 +55,13 @@ export function CalcProvider({ children }: { children: React.ReactNode }) {
       etapas: d.etapas.includes(id) ? d.etapas.filter((e) => e !== id) : [...d.etapas, id],
     }));
 
-  const resultado = useMemo(() => computeAll(draft), [draft]);
+  const resultado = useMemo(() => computeAll(draft, params), [draft, params]);
 
   const reset = () => setDraftState(defaultInput());
 
   const value = useMemo(
-    () => ({ draft, setDraft, toggleEtapa, resultado, reset }),
-    [draft, resultado],
+    () => ({ draft, setDraft, toggleEtapa, resultado, params, reset }),
+    [draft, resultado, params],
   );
 
   return <CalcContext.Provider value={value}>{children}</CalcContext.Provider>;
