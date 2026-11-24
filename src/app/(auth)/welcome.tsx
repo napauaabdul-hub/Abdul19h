@@ -14,7 +14,7 @@ export default function Welcome() {
       <View style={styles.hero}>
         <Image source={require('../../../assets/splash-icon.png')} style={styles.logo} />
         <Text style={styles.nome}>
-          Constrói <Text style={{ color: colors.orange }}>Fácil</Text>
+          NAPAUA <Text style={{ color: colors.orange }}>BUILD</Text>
         </Text>
         <Text style={styles.tagline}>Planeie melhor. Calcule os materiais. Construa com confiança.</Text>
         <Text style={styles.desc}>

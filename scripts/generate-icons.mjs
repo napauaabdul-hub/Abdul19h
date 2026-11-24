@@ -2,10 +2,9 @@ import zlib from 'node:zlib';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const GREEN = [0x43, 0xa0, 0x47];
+const TEAL = [0x07, 0x56, 0x6a];
 const ORANGE = [0xf4, 0x77, 0x21];
 const WHITE = [0xff, 0xff, 0xff];
-const TEAL = [0x07, 0x56, 0x6a];
 
 function crc32(buf) {
   let table = crc32.table;
@@ -55,32 +54,48 @@ function writePng(file, size, pixelAt) {
   fs.writeFileSync(file, png);
 }
 
-function housePixel({ bg, roof, body, door }) {
+function inRect(u, v, x0, y0, x1, y1) {
+  return u >= x0 && u <= x1 && v >= y0 && v <= y1;
+}
+
+function roundedRect(u, v, x0, y0, x1, y1, r) {
+  if (!inRect(u, v, x0, y0, x1, y1)) return false;
+  const cx = Math.min(Math.max(u, x0 + r), x1 - r);
+  const cy = Math.min(Math.max(v, y0 + r), y1 - r);
+  return (u - cx) * (u - cx) + (v - cy) * (v - cy) <= r * r || (u >= x0 + r && u <= x1 - r) || (v >= y0 + r && v <= y1 - r);
+}
+
+function markPixel({ bg, mono }) {
   return (u, v) => {
-    const roofTop = 0.18, roofBase = 0.48, apexU = 0.5, halfBase = 0.36;
-    if (v >= roofTop && v <= roofBase) {
-      const half = halfBase * (v - roofTop) / (roofBase - roofTop);
-      if (Math.abs(u - apexU) <= half) return [...roof, 255];
+    let px = [0, 0, 0, 0];
+    const ink = mono ? WHITE : WHITE;
+    if (inRect(u, v, 0.24, 0.28, 0.36, 0.76)) px = [...ink, 255];
+    if (inRect(u, v, 0.64, 0.30, 0.76, 0.76)) px = [...ink, 255];
+    const wx = 0.7, wy = 0.27, wr = 0.085;
+    const dx = u - wx, dy = v - wy;
+    const dist = Math.hypot(dx, dy);
+    if (dist <= wr) {
+      const ang = Math.atan2(dy, dx);
+      const notch = ang < -Math.PI * 0.72 || ang > -Math.PI * 0.28;
+      if (!notch) px = [...ink, 255];
     }
-    if (u >= 0.26 && u <= 0.74 && v >= 0.48 && v <= 0.82) {
-      if (u >= 0.44 && u <= 0.56 && v >= 0.62 && v <= 0.82) return [...door, 255];
-      if (u >= 0.31 && u <= 0.41 && v >= 0.55 && v <= 0.65) return [220, 240, 230, 255];
-      if (u >= 0.59 && u <= 0.69 && v >= 0.55 && v <= 0.65) return [220, 240, 230, 255];
-      return [...body, 255];
-    }
-    if (bg) return [...bg, 255];
-    return [0, 0, 0, 0];
+    const t = Math.min(1, Math.max(0, (u - 0.3) / 0.4));
+    const vc = 0.3 + t * 0.44;
+    if (u >= 0.3 && u <= 0.7 && Math.abs(v - vc) < 0.05) px = mono ? [...WHITE, 255] : [...ORANGE, 255];
+    if (roundedRect(u, v, 0.16, 0.205, 0.44, 0.3, 0.03)) px = mono ? [...WHITE, 255] : [...ORANGE, 255];
+    if (px[3] === 0 && bg) px = [...bg, 255];
+    return px;
   };
 }
 
 const out = path.resolve(process.cwd(), 'assets');
 fs.mkdirSync(out, { recursive: true });
 
-writePng(path.join(out, 'icon.png'), 1024, housePixel({ bg: GREEN, roof: ORANGE, body: WHITE, door: GREEN }));
-writePng(path.join(out, 'splash-icon.png'), 1024, housePixel({ bg: GREEN, roof: ORANGE, body: WHITE, door: GREEN }));
-writePng(path.join(out, 'favicon.png'), 64, housePixel({ bg: GREEN, roof: ORANGE, body: WHITE, door: GREEN }));
-writePng(path.join(out, 'android-icon-foreground.png'), 1024, housePixel({ bg: null, roof: ORANGE, body: WHITE, door: TEAL }));
-writePng(path.join(out, 'android-icon-monochrome.png'), 1024, housePixel({ bg: null, roof: WHITE, body: WHITE, door: [0, 0, 0] }));
-writePng(path.join(out, 'android-icon-background.png'), 1024, (u, v) => [...GREEN, 255]);
+writePng(path.join(out, 'icon.png'), 1024, markPixel({ bg: TEAL, mono: false }));
+writePng(path.join(out, 'splash-icon.png'), 1024, markPixel({ bg: TEAL, mono: false }));
+writePng(path.join(out, 'favicon.png'), 64, markPixel({ bg: TEAL, mono: false }));
+writePng(path.join(out, 'android-icon-foreground.png'), 1024, markPixel({ bg: null, mono: false }));
+writePng(path.join(out, 'android-icon-monochrome.png'), 1024, markPixel({ bg: null, mono: true }));
+writePng(path.join(out, 'android-icon-background.png'), 1024, () => [...TEAL, 255]);
 
-console.log('icons gerados em', out);
+console.log('ícones NAPAUA BUILD gerados em', out);

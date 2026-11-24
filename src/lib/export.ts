@@ -93,18 +93,18 @@ export function buildPdfHtml(project: SavedProject): string {
     : '';
   return `<!doctype html><html><head><meta charset="utf-8"/><style>
     body{font-family:Helvetica,Arial,sans-serif;color:#202124;font-size:12px;margin:24px}
-    h1{color:#348B59;font-size:20px;margin-bottom:4px}
+    h1{color:#07566A;font-size:20px;margin-bottom:4px}
     h3{color:#07566A;font-size:14px;margin:18px 0 4px}
     .desc{color:#5f6368;margin:0 0 8px}
     table{width:100%;border-collapse:collapse;margin-bottom:8px}
-    th{background:#348B59;color:#fff;text-align:left;padding:6px;font-size:11px}
+    th{background:#07566A;color:#fff;text-align:left;padding:6px;font-size:11px}
     td{border-bottom:1px solid #E3E6E4;padding:6px;font-size:11px;vertical-align:top}
     td.n{text-align:right;white-space:nowrap}
     .meta{color:#5f6368;font-size:11px;margin-bottom:12px}
     .total{margin-top:16px;font-size:14px;font-weight:bold;color:#F47721}
     .aviso{margin-top:24px;font-size:10px;color:#5f6368;border-top:1px solid #E3E6E4;padding-top:8px}
   </style></head><body>
-    <h1>Constrói Fácil — ${escapeHtml(project.nome)}</h1>
+    <h1>NAPAUA BUILD — ${escapeHtml(project.nome)}</h1>
     <div class="meta">Emitido em ${new Date(project.criadoEm).toLocaleDateString('pt-MZ')} ·
       Tipo ${escapeHtml(input.tipo)} · ${formatNumber(resultado.area)} m² · ${input.pisos} piso(s)</div>
     ${rows}
@@ -133,10 +133,10 @@ export async function partilharArquivo(uri: string, titulo: string): Promise<voi
 
 export async function partilharWhatsApp(project: SavedProject): Promise<void> {
   const texto =
-    `*Constrói Fácil — ${project.nome}*\n` +
+    `*NAPAUA BUILD — ${project.nome}*\n` +
     `Área: ${formatNumber(project.resultado.area)} m²\n\n` +
     resumoLinhas(project.resultado, project.orcamento) +
-    `\n\n_Estimativa de planeamento — Constrói Fácil_`;
+    `\n\n_Estimativa de planeamento — NAPAUA BUILD_`;
   const url = `whatsapp://send?text=${encodeURIComponent(texto)}`;
   const suportado = await Linking.canOpenURL(url);
   if (suportado) {

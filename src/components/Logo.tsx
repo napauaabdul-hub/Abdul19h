@@ -6,8 +6,8 @@ export function Logo({ size = 40, light = false }: { size?: number; light?: bool
   return (
     <View style={styles.row}>
       <Image source={require('../../assets/icon.png')} style={{ width: size, height: size, borderRadius: size / 4 }} />
-      <Text style={[styles.nome, { color: light ? colors.white : colors.primary }, { fontSize: size * 0.5 }]}>
-        Constrói <Text style={{ color: colors.orange }}>Fácil</Text>
+      <Text style={[styles.nome, { color: light ? colors.white : colors.primary }, { fontSize: size * 0.42 }]}>
+        NAPAUA <Text style={{ color: colors.orange }}>BUILD</Text>
       </Text>
     </View>
   );

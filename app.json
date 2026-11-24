@@ -1,20 +1,20 @@
 {
   "expo": {
-    "name": "Constrói Fácil",
-    "slug": "constroi-facil",
+    "name": "NAPAUA BUILD",
+    "slug": "napaua-build",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "constroifacil",
+    "scheme": "napauabuild",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "mz.constroifacil.app"
+      "bundleIdentifier": "mz.napauabuild.app"
     },
     "android": {
-      "package": "mz.constroifacil.app",
+      "package": "mz.napauabuild.app",
       "adaptiveIcon": {
-        "backgroundColor": "#43A047",
+        "backgroundColor": "#07566A",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -34,7 +34,7 @@
         {
           "image": "./assets/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#43A047"
+          "backgroundColor": "#07566A"
         }
       ]
     ]

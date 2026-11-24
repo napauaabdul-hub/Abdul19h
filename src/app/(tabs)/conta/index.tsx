@@ -93,7 +93,7 @@ export default function Conta() {
         ))}
       </Card>
       <Button label="Terminar sessão" variant="ghost" onPress={terminar} />
-      <Text style={styles.versao}>Constrói Fácil v1.0.0 · 100% gratuito · Moçambique · MT</Text>
+      <Text style={styles.versao}>NAPAUA BUILD v1.0.0 · 100% gratuito · Moçambique · MT</Text>
     </View>
   );
 }

@@ -26,7 +26,7 @@ export default function Notificacoes() {
           {
             id: 'boasvindas',
             icon: 'hammer',
-            titulo: 'Bem-vindo ao Constrói Fácil',
+            titulo: 'Bem-vindo ao NAPAUA BUILD',
             texto: 'Use a calculadora para estimar os materiais da sua casa, etapa a etapa. É 100% gratuito.',
             quando: 'Agora',
           },

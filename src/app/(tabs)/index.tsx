@@ -64,7 +64,7 @@ export default function Home() {
       <View style={styles.banner}>
         <View style={{ flex: 1 }}>
           <Text style={styles.bannerTitle}>
-            Vai construir a sua casa? Descubra quanto material precisa com o Constrói Fácil!
+            Vai construir a sua casa? Descubra quanto material precisa com a NAPAUA BUILD!
           </Text>
           <View style={styles.bannerBtns}>
             <Pressable style={styles.bannerBtnPrimary} onPress={() => router.push('/(tabs)/calculadora')}>
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     borderWidth: 1,
-    borderColor: '#C8E6C9',
+    borderColor: '#BFE3EC',
   },
   bannerTitle: { color: colors.text, fontSize: 15, fontWeight: '800', lineHeight: 21 },
   bannerIcon: {
@@ -230,6 +230,6 @@ const styles = StyleSheet.create({
   svcPrice: { fontSize: 12, color: colors.orange, fontWeight: '700', marginTop: 4 },
   svcContact: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 8 },
   svcContactText: { fontSize: 12, color: colors.accent, fontWeight: '700' },
-  free: { marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.tint, borderWidth: 1, borderColor: '#C8E6C9', shadowColor: 'transparent', elevation: 0 },
+  free: { marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.tint, borderWidth: 1, borderColor: '#BFE3EC', shadowColor: 'transparent', elevation: 0 },
   freeText: { flex: 1, fontSize: 13, color: colors.text, fontWeight: '600', lineHeight: 18 },
 });
