@@ -21,6 +21,15 @@ Se um dia precisar de login Expo (ex.: EAS build), faça-o **dentro do navegador
 4. Se continuar a falhar, envie: (a) o conteúdo de **View error log** no Expo Go e (b) o output do terminal do Codespace depois de o telemóvel tentar abrir — um deles mostra o erro real.
 5. Alternativa fiável: login dentro do Codespace (ponto acima) e depois `npx expo start --tunnel` — o URL `exp://....exp.direct` é feito para telemóvel.
 
+### Erro específico: `Uncaught Error: java.io.IOException: Failed to download remote update`
+
+O Expo Go não conseguiu descarregar o bundle → é o URL/rede, não o código. Por ordem:
+
+1. No terminal do Codespace, copie o URL **exatamente** como aparece em `Metro waiting on exp://...` (se for IP local 172.x/192.168.x, não serve para o telemóvel).
+2. Aba **Ports** → 8081 → **Public** → copie o *Forwarded Address* `https://NOME-8081.app.github.dev` e no Expo Go use `exp://NOME-8081.app.github.dev` (Enter URL manually). Expo Go atualizado.
+3. Se falhar outra vez: faça login **dentro do navegador do Codespace** (`npx expo login` → abrir o URL no Simple Browser do VS Code → aprovar; o callback `localhost:44309` só funciona lá dentro) e depois `npx expo start --tunnel` → ler o QR `exp://....exp.direct:80` com o Expo Go.
+4. Fallback sem Expo Go: `npx expo start --web --port 8081` e abra `https://NOME-8081.app.github.dev` no **navegador do telemóvel** — testa toda a UI no browser (PDF usa print do navegador, voz/ficheiros têm limitações web).
+
 ## 1. Preparar o telemóvel
 
 Opção A — Expo Go (rápido, para testes de UI):
