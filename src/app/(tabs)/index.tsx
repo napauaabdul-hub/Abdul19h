@@ -7,6 +7,7 @@ import { useAuth } from '../../context/auth';
 import { Logo } from '../../components/Logo';
 import { Card } from '../../components/Card';
 import { SectionHeader } from '../../components/SectionHeader';
+import { Stars } from '../../components/Stars';
 import { SERVICES } from '../../lib/data/services';
 import { colors, radius, shadow } from '../../lib/theme';
 
@@ -46,7 +47,7 @@ export default function Home() {
           </Pressable>
         </View>
       </View>
-      <Text style={styles.saudacao}>{saudacao()}, {nome ?? 'construtor'}!</Text>
+      <Text style={styles.saudacao}>{saudacao()}, {nome ?? 'construtor'}! 👋</Text>
 
       <Pressable style={styles.search} onPress={() => router.push('/busca')}>
         <Ionicons name="search" size={18} color={colors.textMuted} />
@@ -67,14 +68,16 @@ export default function Home() {
           </Text>
           <View style={styles.bannerBtns}>
             <Pressable style={styles.bannerBtnPrimary} onPress={() => router.push('/(tabs)/calculadora')}>
-              <Text style={styles.bannerBtnPrimaryText}>Calcular materiais</Text>
+              <Text style={styles.bannerBtnPrimaryText}>CALCULAR MATERIAIS</Text>
             </Pressable>
             <Pressable style={styles.bannerBtnSecondary} onPress={() => router.push('/orcamentos/novo')}>
               <Text style={styles.bannerBtnSecondaryText}>Solicitar orçamento</Text>
             </Pressable>
           </View>
         </View>
-        <Ionicons name="hammer" size={56} color="rgba(255,255,255,0.35)" style={{ alignSelf: 'flex-end' }} />
+        <View style={styles.bannerIcon}>
+          <Ionicons name="hammer" size={34} color={colors.primary} />
+        </View>
       </View>
 
       <View style={{ height: 18 }} />
@@ -83,7 +86,7 @@ export default function Home() {
         {CATEGORIAS.map((c) => (
           <Pressable key={c.titulo} style={styles.cat} onPress={() => router.push(c.rota as never)}>
             <View style={styles.catIcon}>
-              <Ionicons name={c.icon as never} size={22} color={colors.primary} />
+              <Ionicons name={c.icon as never} size={24} color={colors.accent} />
             </View>
             <Text style={styles.catText}>{c.titulo}</Text>
           </Pressable>
@@ -103,9 +106,11 @@ export default function Home() {
               <Ionicons name={s.icon as never} size={26} color={colors.white} />
             </View>
             <Text style={styles.svcTitle} numberOfLines={2}>{s.titulo}</Text>
+            <Stars rating={s.rating} />
+            <Text style={styles.svcReviews}>({s.avaliacoes} avaliações)</Text>
             <Text style={styles.svcPrice} numberOfLines={1}>{s.precoReferencia}</Text>
             <View style={styles.svcContact}>
-              <Ionicons name="logo-whatsapp" size={14} color={colors.primary} />
+              <Ionicons name="logo-whatsapp" size={14} color={colors.accent} />
               <Text style={styles.svcContactText}>WhatsApp</Text>
             </View>
           </Card>
@@ -125,7 +130,7 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.gray },
+  root: { flex: 1, backgroundColor: colors.white },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -142,7 +147,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 32,
     borderRadius: radius.pill,
-    ...shadow.card,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   localText: { fontSize: 12, color: colors.textMuted, fontWeight: '600' },
   bell: {
@@ -152,7 +158,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
-    ...shadow.card,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   saudacao: { fontSize: 20, fontWeight: '800', color: colors.text, paddingHorizontal: 16, marginTop: 14 },
   search: {
@@ -172,44 +179,57 @@ const styles = StyleSheet.create({
   banner: {
     marginHorizontal: 16,
     marginTop: 16,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.tint,
     borderRadius: radius.xl,
     padding: 18,
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1,
+    borderColor: '#C8E6C9',
+  },
+  bannerTitle: { color: colors.text, fontSize: 15, fontWeight: '800', lineHeight: 21 },
+  bannerIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: radius.pill,
+    backgroundColor: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center',
     ...shadow.card,
   },
-  bannerTitle: { color: colors.white, fontSize: 16, fontWeight: '800', lineHeight: 22 },
   bannerBtns: { flexDirection: 'row', gap: 8, marginTop: 14, flexWrap: 'wrap' },
-  bannerBtnPrimary: { backgroundColor: colors.orange, borderRadius: radius.md, paddingHorizontal: 14, height: 38, justifyContent: 'center' },
-  bannerBtnPrimaryText: { color: colors.white, fontWeight: '800', fontSize: 13 },
+  bannerBtnPrimary: { backgroundColor: colors.orange, borderRadius: radius.pill, paddingHorizontal: 14, height: 38, justifyContent: 'center' },
+  bannerBtnPrimaryText: { color: colors.white, fontWeight: '800', fontSize: 12, letterSpacing: 0.5 },
   bannerBtnSecondary: {
-    backgroundColor: 'rgba(255,255,255,0.16)',
-    borderRadius: radius.md,
+    backgroundColor: colors.white,
+    borderRadius: radius.pill,
     paddingHorizontal: 14,
     height: 38,
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.5)',
+    borderColor: colors.border,
   },
-  bannerBtnSecondaryText: { color: colors.white, fontWeight: '700', fontSize: 13 },
+  bannerBtnSecondaryText: { color: colors.primary, fontWeight: '700', fontSize: 12 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 12, gap: 4 },
-  cat: { width: '31.5%', margin: 4, backgroundColor: colors.white, borderRadius: radius.lg, padding: 12, alignItems: 'center', ...shadow.card },
+  cat: { width: '31.5%', margin: 4, paddingVertical: 12, alignItems: 'center' },
   catIcon: {
-    width: 46,
-    height: 46,
-    borderRadius: 14,
-    backgroundColor: colors.gray,
+    width: 56,
+    height: 56,
+    borderRadius: radius.pill,
+    backgroundColor: colors.tint,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
   },
   catText: { fontSize: 12, fontWeight: '700', color: colors.text, textAlign: 'center' },
-  svc: { width: 170 },
-  svcIcon: { width: 48, height: 48, borderRadius: 14, backgroundColor: colors.teal, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
+  svc: { width: 170, borderWidth: 1, borderColor: colors.border, shadowColor: 'transparent', elevation: 0 },
+  svcIcon: { width: 48, height: 48, borderRadius: radius.pill, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
   svcTitle: { fontSize: 14, fontWeight: '800', color: colors.text, minHeight: 36 },
-  svcPrice: { fontSize: 12, color: colors.orange, fontWeight: '700', marginTop: 2 },
+  svcReviews: { fontSize: 11, color: colors.textMuted, marginTop: 1 },
+  svcPrice: { fontSize: 12, color: colors.orange, fontWeight: '700', marginTop: 4 },
   svcContact: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 8 },
-  svcContactText: { fontSize: 12, color: colors.primary, fontWeight: '700' },
-  free: { marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  svcContactText: { fontSize: 12, color: colors.accent, fontWeight: '700' },
+  free: { marginHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.tint, borderWidth: 1, borderColor: '#C8E6C9', shadowColor: 'transparent', elevation: 0 },
   freeText: { flex: 1, fontSize: 13, color: colors.text, fontWeight: '600', lineHeight: 18 },
 });

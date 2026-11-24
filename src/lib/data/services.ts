@@ -13,6 +13,8 @@ export const SERVICES: Service[] = [
     destaques: ['T1, T2, T3 e T4', 'Moradias completas', 'Anexos e ampliações', 'Remodelações'],
     precoReferencia: 'Sob consulta, conforme a área e o modelo',
     whatsapp: WHATSAPP,
+    rating: 4.9,
+    avaliacoes: 212,
   },
   {
     id: 'vigotas-abobadilhas',
@@ -24,6 +26,8 @@ export const SERVICES: Service[] = [
     destaques: ['Fabrico próprio', 'Fornecimento ao domicílio', 'Montagem incluída', 'Medidas à medida da obra'],
     precoReferencia: 'Vigota a partir de MT 220,00; abobadilha a partir de MT 35,00',
     whatsapp: WHATSAPP,
+    rating: 4.7,
+    avaliacoes: 86,
   },
   {
     id: 'fornecimento-blocos',
@@ -35,6 +39,8 @@ export const SERVICES: Service[] = [
     destaques: ['Blocos de 10', 'Blocos de 15', 'Entrega na obra', 'Preço por unidade'],
     precoReferencia: 'Bloco de 10: MT 45,00; bloco de 15: MT 55,00',
     whatsapp: WHATSAPP,
+    rating: 4.6,
+    avaliacoes: 154,
   },
   {
     id: 'criacao-plantas',
@@ -46,6 +52,8 @@ export const SERVICES: Service[] = [
     destaques: ['Plantas T1 a T4', 'Projectos personalizados', 'Adaptação ao terreno', 'Compatíveis com a lei'],
     precoReferencia: 'Sob consulta, conforme a tipologia',
     whatsapp: WHATSAPP,
+    rating: 4.8,
+    avaliacoes: 97,
   },
   {
     id: 'servicos-orcamento',
@@ -57,6 +65,8 @@ export const SERVICES: Service[] = [
     destaques: ['Quantificação de materiais', 'Planilhas Excel', 'Orçamentos de construção', 'Estimativas de custos'],
     precoReferencia: 'Consulta gratuita pelo WhatsApp',
     whatsapp: WHATSAPP,
+    rating: 4.9,
+    avaliacoes: 178,
   },
 ];
 

@@ -7,7 +7,8 @@ import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Screen } from '../../components/Screen';
 import { SetTitle } from '../../components/SetTitle';
-import { colors, radius, shadow } from '../../lib/theme';
+import { Stars } from '../../components/Stars';
+import { colors, radius } from '../../lib/theme';
 
 export default function ServicoDetalhe() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -31,7 +32,7 @@ export default function ServicoDetalhe() {
     <ScrollView style={styles.root} contentContainerStyle={{ padding: 16 }}>
       <SetTitle title={servico.titulo} />
       <View style={styles.banner}>
-        <Ionicons name={servico.icon as never} size={54} color={colors.white} />
+        <Ionicons name={sv.icon as never} size={54} color={colors.accent} />
       </View>
       <Text style={styles.titulo}>{servico.titulo}</Text>
       <View style={styles.catRow}>
@@ -41,6 +42,10 @@ export default function ServicoDetalhe() {
         <View style={styles.precoChip}>
           <Text style={styles.precoText}>{servico.precoReferencia}</Text>
         </View>
+      </View>
+      <View style={styles.ratingRow}>
+        <Stars rating={servico.rating} size={16} />
+        <Text style={styles.ratingText}>{servico.avaliacoes} avaliações de clientes</Text>
       </View>
       <Text style={styles.desc}>{servico.descricao}</Text>
       <Card style={styles.card}>
@@ -64,13 +69,16 @@ const styles = StyleSheet.create({
   banner: {
     height: 140,
     borderRadius: radius.xl,
-    backgroundColor: colors.teal,
+    backgroundColor: colors.tint,
+    borderWidth: 1,
+    borderColor: '#C8E6C9',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 14,
-    ...shadow.card,
   },
   titulo: { fontSize: 22, fontWeight: '800', color: colors.text },
+  ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
+  ratingText: { fontSize: 12, color: colors.textMuted, fontWeight: '600' },
   catRow: { flexDirection: 'row', gap: 8, marginTop: 8, flexWrap: 'wrap' },
   catChip: { backgroundColor: colors.gray, borderRadius: 999, paddingHorizontal: 12, height: 30, justifyContent: 'center' },
   catText: { fontSize: 12, fontWeight: '700', color: colors.teal },

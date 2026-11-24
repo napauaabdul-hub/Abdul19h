@@ -6,6 +6,7 @@ import { SERVICES, SERVICE_CATEGORIES } from '../../../lib/data/services';
 import { Card } from '../../../components/Card';
 import { Chip } from '../../../components/Chip';
 import { EmptyState } from '../../../components/EmptyState';
+import { Stars } from '../../../components/Stars';
 import { colors, radius, shadow } from '../../../lib/theme';
 
 export default function Servicos() {
@@ -32,11 +33,12 @@ export default function Servicos() {
         renderItem={({ item }) => (
           <Card onPress={() => router.push(`/servicos/${item.id}`)} style={styles.card}>
             <View style={styles.icon}>
-              <Ionicons name={item.icon as never} size={28} color={colors.white} />
+              <Ionicons name={item.icon as never} size={28} color={colors.accent} />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.titulo}>{item.titulo}</Text>
               <Text style={styles.cat}>{item.categoria}</Text>
+              <Stars rating={item.rating} />
               <Text style={styles.preco} numberOfLines={1}>{item.precoReferencia}</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.gray },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 14 },
   card: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 10 },
-  icon: { width: 52, height: 52, borderRadius: 16, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
+  icon: { width: 52, height: 52, borderRadius: radius.pill, backgroundColor: colors.tint, alignItems: 'center', justifyContent: 'center' },
   titulo: { fontSize: 15, fontWeight: '800', color: colors.text },
   cat: { fontSize: 12, color: colors.teal, fontWeight: '700', marginTop: 1 },
   preco: { fontSize: 12, color: colors.orange, fontWeight: '700', marginTop: 2 },

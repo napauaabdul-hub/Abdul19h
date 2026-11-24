@@ -21,9 +21,13 @@ npx expo start --ios
 - `src/lib/export.ts` — exportação PDF (expo-print), Excel/CSV (expo-file-system) e partilha WhatsApp.
 - `src/lib/storage.ts` + `src/context/` — persistência local (AsyncStorage): utilizadores, projetos, pedidos, plantas guardadas. Funciona offline; autenticação local de demonstração (a integração Supabase entra como fase seguinte, sem mudar as telas).
 
-## Paleta
+## Paleta (escolhida por psicologia das cores)
 
-Verde `#348B59`, verde-azulado `#07566A`, laranja `#F47721`, branco, cinzento `#F4F5F4`, texto `#202124`. Moeda: Metical (MT). Idioma: português.
+Referência principal: UI de app de serviços com verde dominante (confiança, crescimento, estabilidade — essencial para construção civil) + fundo branco + cinzento `#F5F5F5` + texto `#212121` + estrelas âmbar `#FFC107`.
+
+- Verde primário `#348B59` (botões/títulos, bom contraste) e verde vivo `#4CAF50` (ícones e estados ativos)
+- Verde-azulado `#07566A` (secundária), laranja `#F47721` apenas em CTAs (ação), âmbar `#FFC107` em avaliações
+- Moeda: Metical (MT). Idioma: português.
 
 ## Verificações
 

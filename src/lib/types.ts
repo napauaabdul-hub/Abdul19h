@@ -104,6 +104,8 @@ export interface Service {
   destaques: string[];
   precoReferencia: string;
   whatsapp: string;
+  rating: number;
+  avaliacoes: number;
 }
 
 export interface ServiceRequest {

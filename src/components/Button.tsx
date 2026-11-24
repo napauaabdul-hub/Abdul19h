@@ -52,10 +52,10 @@ export function Button({
 const styles = StyleSheet.create({
   base: {
     height: 48,
-    borderRadius: radius.md,
+    borderRadius: radius.pill,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 22,
     borderWidth: 1.5,
   },
   label: { fontSize: 16, fontWeight: '700' },
