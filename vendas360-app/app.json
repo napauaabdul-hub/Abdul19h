@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Vendas 360",
+    "slug": "vendas360",
+    "version": "1.0.0",
+    "scheme": "vendas360",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.vendas360.app",
+      "versionCode": 1
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "plugins": ["expo-router", "expo-sqlite"]
+  }
+}
