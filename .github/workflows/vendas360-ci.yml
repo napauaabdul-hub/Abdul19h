@@ -1,0 +1,42 @@
+name: vendas360-ci
+
+on:
+  push:
+    branches: [vibe/vendas360-3c5dec]
+  pull_request:
+    branches: [main]
+    paths: ["vendas360/**", "vendas360-app/**", ".github/workflows/vendas360-ci.yml"]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax check
+        run: python3 -m py_compile vendas360/server.py vendas360/test_smoke.py
+      - name: JS syntax check
+        run: node --check vendas360/static/app.js
+      - name: Smoke test (API + frontend estático)
+        run: python3 vendas360/test_smoke.py
+
+  app-mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vendas360-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: vendas360-app/package-lock.json
+      - name: Instalar dependências
+        run: npm ci --no-audit --no-fund
+      - name: Testes unitários (formatação + regras de negócio)
+        run: npm test
+      - name: Typecheck (tsc --noEmit)
+        run: npx tsc --noEmit

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendas 360 — Gestão de Supermercado</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="brand">
+    <span class="brand-logo">V</span>
+    <span class="brand-name">VENDAS <b>360</b></span>
+  </div>
+  <nav id="mainnav">
+    <a href="#/pdv" data-route="pdv" title="PDV / Vendas">🛒<span>PDV</span></a>
+    <a href="#/caixa" data-route="caixa" title="Caixa">💰<span>Caixa</span></a>
+    <a href="#/credito" data-route="credito" title="Crédito / Fiado">👥<span>Crédito</span></a>
+    <a href="#/relatorios" data-route="relatorios" title="Relatórios">📊<span>Relatórios</span></a>
+    <a href="#/estoque" data-route="estoque" title="Estoque">📦<span>Estoque</span></a>
+    <a href="#/cadastros" data-route="cadastros" title="Cadastros">⚙️<span>Cadastros</span></a>
+  </nav>
+  <div class="topbar-right">
+    <input id="global-search" type="search" placeholder="Procurar produto...">
+    <span class="bell" title="Notificações">🔔<i>15+</i></span>
+    <div class="user-chip">
+      <span class="avatar">MC</span>
+      <div><b id="user-name">Montes Chipire</b><small id="user-role">Gestor</small></div>
+    </div>
+  </div>
+</header>
+<main id="app"></main>
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+<script src="/app.js"></script>
+</body>
+</html>
