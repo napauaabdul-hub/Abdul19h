@@ -15,9 +15,10 @@ const fontes = [
   'src/lib/format.ts',
 ];
 
+const tscBin = path.join(root, 'node_modules', 'typescript', 'bin', 'tsc');
 execFileSync(
-  'npx',
-  ['tsc', '--ignoreConfig', ...fontes, '--outDir', out, '--module', 'commonjs', '--target', 'es2020', '--esModuleInterop', '--skipLibCheck', '--strict'],
+  process.execPath,
+  [tscBin, '--ignoreConfig', ...fontes, '--outDir', out, '--module', 'commonjs', '--target', 'es2020', '--esModuleInterop', '--skipLibCheck', '--strict'],
   { cwd: root, stdio: 'inherit' },
 );
 
