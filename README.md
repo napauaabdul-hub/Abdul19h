@@ -8,6 +8,7 @@ Site estático (HTML + CSS + JavaScript puro, sem dependências) que funciona co
 - Grelha de agentes com autor, vendas, avaliação, categoria e preço (grátis ou subscrição)
 - Secção "Publica o teu Skill e ganha 24/7" com os 3 passos (Enviar → Definir o preço → Ser pago)
 - Secção "Por que SkillHub" e FAQ em acordeão
+- Modal "🧪 Testar agente": clica num cartão para ver os detalhes, copiar o prompt (lido de `prompts/`) e seguir as instruções para testar num GPT — ou abrir diretamente os agentes com link online
 - Design escuro responsivo, sem necessidade de build
 
 ## Como executar
