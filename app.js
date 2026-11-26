@@ -58,6 +58,7 @@ const AGENTS = [
   { name: "ImpostosSimples", icon: "🧾", cat: "Finanças", author: "ana.g", sold: "540", soldNum: 540, rating: 4.7, price: "US$9.99 / hora", free: false, desc: "Ajuda a organizar faturas e documentos para o IRS e explica prazos e deduções em Portugal." },
   { name: "AvatarTu", icon: "🙂", cat: "Imagem", author: "cutieai", sold: "1,1k", soldNum: 1100, rating: 4.8, price: "Grátis", free: true, desc: "Carrega uma foto tua e recebe um avatar chibi que continua a parecer-te, em 3 estilos diferentes. Sem prompts." },
   { name: "PosterPro", icon: "🖨️", cat: "Imagem", author: "ricardo.v", sold: "670", soldNum: 670, rating: 4.6, price: "US$5.99 / semana", free: false, desc: "Cria cartazes, flyers e convites para eventos com o texto e as datas que lhe deres, prontos a imprimir." },
+  { name: "ThumbForge", icon: "🖼️", cat: "Imagem", author: "abdul19h", sold: "Novo", soldNum: 0, rating: 5.0, price: "Grátis", free: true, desc: "Gera templates de thumbnails para YouTube no formato 16:9 (1280×720): título em texto grande e bold com contorno/sombra, alto contraste, fundo por imagem ou cor sólida, setas, círculos e emojis — exporta como PNG pronto a usar." },
   { name: "HashtagMax", icon: "#️⃣", cat: "Redes sociais", author: "marta.o", sold: "1,3k", soldNum: 1300, rating: 4.5, price: "Grátis", free: true, desc: "Analisa o teu nicho e devolve as melhores hashtags por categoria (viral, nicho e marca), atualizadas semanalmente." },
   { name: "ReelsVirais", icon: "🎯", cat: "Redes sociais", author: "saya", sold: "105", soldNum: 105, rating: 3.8, price: "US$3.99 / dia", free: false, desc: "Gera guiões virais para TikTok e Reels com hook nos primeiros 3 segundos, estrutura de retenção e CTA final." },
   { name: "LojaBoost", icon: "🛍️", cat: "Comércio", author: "lay", sold: "430", soldNum: 430, rating: 4.8, price: "US$8.33 / mês", free: false, desc: "Otimiza a tua loja online: páginas de produto, e-mails automáticos e estrutura de navegação que converte." },
@@ -135,7 +136,7 @@ function renderAgents() {
       <p class="desc">${a.desc}</p>
       <span class="by">by: ${a.author}</span>
       <div class="stats">
-        <span>🛒 ${a.sold} vendidos</span>
+        <span>${a.soldNum === 0 ? "🆕 novo" : `🛒 ${a.sold} vendidos`}</span>
         <span>⭐ ${a.rating.toFixed(1)}</span>
       </div>
       <div class="card-foot">
