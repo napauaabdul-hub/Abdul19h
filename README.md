@@ -27,3 +27,4 @@ Também funciona diretamente no GitHub Pages (basta ativar nas definições do r
 - `index.html` — estrutura da página
 - `styles.css` — estilos (tema escuro, responsivo)
 - `app.js` — dados dos agentes, filtros de categoria, pesquisa e renderização
+- `prompts/` — prompts completos dos agentes publicados (ex.: `fofinho.md`)
