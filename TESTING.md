@@ -43,11 +43,11 @@ No telemóvel: instalar **Expo Go** (Play Store) → ler o QR do terminal. Nota:
 Opção B — APK de desenvolvimento (recomendado para testar tudo):
 
 ```bash
-npx eas-cli@latest login            # conta Expo (gratuita)
+npx eas-cli@latest login            # conta Expo (gratuita) — se não tiver, crie em expo.dev/signup
 npx eas-cli@latest build --profile development --platform android
 ```
 
-ou build de produção/preview para instalar como app normal. Depois instalar o APK no telemóvel (`adb install app.apk` ou enviar o ficheiro).
+Na primeira build, responda **sim** quando pedir para criar o projeto no expo.dev e para o EAS gerar o keystore (credenciais geridas). O `eas.json` já vem no repositório com os perfis `development` (APK), `preview` (APK) e `production` (AAB). A build demora ~10–20 min e no fim dá um **link/QR para descarregar o APK**. Depois instalar o APK no telemóvel (`adb install app.apk` ou enviar o ficheiro e tocar nele, autorizando "fontes desconhecidas").
 
 ## 2. Matriz de dispositivos sugerida (realidade de Moçambique)
 
