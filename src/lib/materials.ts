@@ -1,0 +1,52 @@
+import { MaterialPrice } from './types';
+
+export const MATERIAL_PRICES: MaterialPrice[] = [
+  { nome: 'Cimento (saco 50 kg)', unidade: 'saco', precoMT: 350 },
+  { nome: 'Areia', unidade: 'm³', precoMT: 1200 },
+  { nome: 'Pedra britada', unidade: 'm³', precoMT: 1600 },
+  { nome: 'Ferro (kg)', unidade: 'kg', precoMT: 95 },
+  { nome: 'Arame recozido (kg)', unidade: 'kg', precoMT: 120 },
+  { nome: 'Bloco de 10', unidade: 'un', precoMT: 45 },
+  { nome: 'Bloco de 15', unidade: 'un', precoMT: 55 },
+  { nome: 'Tijolo', unidade: 'un', precoMT: 18 },
+  { nome: 'Vigota', unidade: 'un', precoMT: 220 },
+  { nome: 'Abobadilha', unidade: 'un', precoMT: 35 },
+  { nome: 'Chapa de zinco (3 m)', unidade: 'un', precoMT: 480 },
+  { nome: 'Telha', unidade: 'un', precoMT: 60 },
+  { nome: 'Ripa de madeira', unidade: 'm', precoMT: 25 },
+  { nome: 'Calha', unidade: 'm', precoMT: 150 },
+  { nome: 'Cofragem', unidade: 'm²', precoMT: 220 },
+  { nome: 'Impermeabilizante', unidade: 'm²', precoMT: 180 },
+  { nome: 'Cerâmica', unidade: 'm²', precoMT: 650 },
+  { nome: 'Azulejo', unidade: 'm²', precoMT: 520 },
+  { nome: 'Cimento cola (kg)', unidade: 'kg', precoMT: 40 },
+  { nome: 'Tubo PVC 25 mm', unidade: 'm', precoMT: 90 },
+  { nome: 'Tubo PVC 50 mm', unidade: 'm', precoMT: 140 },
+  { nome: 'Tubo PVC 110 mm', unidade: 'm', precoMT: 260 },
+  { nome: 'Joelho PVC', unidade: 'un', precoMT: 25 },
+  { nome: 'Torneira', unidade: 'un', precoMT: 450 },
+  { nome: 'Sanita (louça)', unidade: 'un', precoMT: 2800 },
+  { nome: 'Lavatório', unidade: 'un', precoMT: 1900 },
+  { nome: 'Lava-loiça inox', unidade: 'un', precoMT: 3200 },
+  { nome: 'Porta de madeira', unidade: 'un', precoMT: 3500 },
+  { nome: 'Janela de alumínio', unidade: 'un', precoMT: 4200 },
+  { nome: 'Vidro', unidade: 'm²', precoMT: 380 },
+  { nome: 'Fio 2,5 mm²', unidade: 'm', precoMT: 45 },
+  { nome: 'Fio 1,5 mm²', unidade: 'm', precoMT: 35 },
+  { nome: 'Eletroduto', unidade: 'm', precoMT: 40 },
+  { nome: 'Tomada', unidade: 'un', precoMT: 120 },
+  { nome: 'Interruptor', unidade: 'un', precoMT: 95 },
+  { nome: 'Disjuntor', unidade: 'un', precoMT: 180 },
+  { nome: 'Quadro elétrico', unidade: 'un', precoMT: 850 },
+  { nome: 'Tinta acrílica (L)', unidade: 'L', precoMT: 320 },
+  { nome: 'Fundo selador (L)', unidade: 'L', precoMT: 180 },
+  { nome: 'Lixa', unidade: 'un', precoMT: 15 },
+  { nome: 'Limpeza do terreno', unidade: 'm²', precoMT: 0 },
+  { nome: 'Escavação de valas', unidade: 'm³', precoMT: 0 },
+  { nome: 'Mão de obra especializada (dia)', unidade: 'dia', precoMT: 900 },
+];
+
+export function precoDe(nome: string, unidade: string): number {
+  const encontrado = MATERIAL_PRICES.find((m) => m.nome === nome && m.unidade === unidade);
+  return encontrado ? encontrado.precoMT : 0;
+}
