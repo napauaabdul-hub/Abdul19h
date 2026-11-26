@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillHub — Marketplace de Agentes de IA</title>
+  <meta name="description" content="SkillHub é uma loja de agentes de IA criados por especialistas. Descobre Skills de especialistas, executa online ou publica as tuas para ganhar dinheiro.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="logo" href="#topo">🤖 <span>SkillHub</span></a>
+      <nav class="nav-links">
+        <a href="#agentes">Explorar</a>
+        <a href="#vender">Vender</a>
+        <a href="#porque">Porquê nós</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn ghost" href="#faq">Entrar</a>
+        <a class="btn primary" href="#vender">Publicar Skill</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="topo">
+
+    <section class="hero">
+      <div class="container">
+        <span class="badge">🔥 Marketplace de agentes de IA</span>
+        <h1>Loja de agentes de IA<br>criados por <span class="gradient">especialistas</span></h1>
+        <p class="subtitle">O conhecimento e a experiência de especialistas em cada agente.</p>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input id="search" type="text" placeholder="Descreve a tua tarefa e encontra o agente ideal..." autocomplete="off">
+          <button class="btn primary" id="search-btn" type="button">Procurar</button>
+        </div>
+        <div class="chips" id="chips"></div>
+      </div>
+    </section>
+
+    <section class="sell" id="vender">
+      <div class="container center">
+        <h2>Publica o teu Skill e ganha 24/7</h2>
+        <p class="section-sub">Publica uma vez. Vende várias vezes.</p>
+        <p class="section-text">Transforma o teu Skill num Agent pago em 3 passos simples.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Enviar</h3>
+            <p>Submete o teu Skill: prompts, scripts e o teu know-how.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Definir o preço</h3>
+            <p>Escolhe um plano diário, semanal, mensal ou por hora. Grátis também funciona.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Ser pago</h3>
+            <p>Ganhe a cada renovação da subscrição, 24 horas por dia, 7 dias por semana.</p>
+          </div>
+        </div>
+        <a class="btn primary big" href="#agentes">Começar a vender →</a>
+      </div>
+    </section>
+
+    <section class="agents" id="agentes">
+      <div class="container">
+        <div class="agents-head">
+          <h2>Agentes em destaque</h2>
+          <span class="count" id="agent-count"></span>
+        </div>
+        <div class="grid" id="grid"></div>
+        <p class="empty" id="empty" hidden>Nenhum agente encontrado para esta pesquisa. Tenta outra categoria ou termo. 🤖</p>
+      </div>
+    </section>
+
+    <section class="why" id="porque">
+      <div class="container">
+        <h2 class="center">Por que SkillHub</h2>
+        <p class="section-sub center">Um marketplace de Agents baseado em Skills.</p>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-icon">⚡</div>
+            <h3>Skills prontas para produção</h3>
+            <p>Código, escrita, pesquisa e operações — encontra uma Skill para qualquer tarefa ou pede a um criador.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🤖</div>
+            <h3>Agents prontos a executar</h3>
+            <p>Executa Skills diretamente no navegador ou instala no teu cliente de IA favorito e usa cada Skill a partir daí.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">💰</div>
+            <h3>Ganha 24/7 com os teus Skills</h3>
+            <p>Publica uma vez e ganha a cada renovação de subscrição — diária, semanal ou mensal.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🔒</div>
+            <h3>Workspace seguro e privado</h3>
+            <p>O teu Skill pode correr na nossa nuvem. Ele recebe o resultado; tu manténs os prompts e o know-how.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="container narrow">
+        <h2 class="center">Perguntas frequentes</h2>
+        <p class="section-sub center">Entende como funciona o marketplace de Skills — preços, reembolsos e como usar os Agents.</p>
+        <div class="accordion">
+          <details>
+            <summary>O que é o SkillHub?</summary>
+            <p>O SkillHub é uma loja de agentes de IA: descobre Skills de especialistas, executa-as online ou publica as tuas para ganhar dinheiro.</p>
+          </details>
+          <details>
+            <summary>Como publico o meu Skill?</summary>
+            <p>Em três passos: envia o teu Skill, define o preço (diário, semanal, mensal ou por hora) e começa a receber. Não precisas de saber programar.</p>
+          </details>
+          <details>
+            <summary>Quanto custa usar um agente?</summary>
+            <p>Cada criador define o preço do seu agente — pode ser grátis, por hora, por dia, por semana ou por mês. Vês o preço antes de subscrever.</p>
+          </details>
+          <details>
+            <summary>Como e quando sou pago?</summary>
+            <p>És pago a cada renovação da subscrição dos utilizadores do teu Skill, automaticamente, 24/7.</p>
+          </details>
+          <details>
+            <summary>Os meus dados estão seguros?</summary>
+            <p>Não vendemos os teus dados nem usamos as tuas entradas para treinar modelos de IA. Usamos criptografia para proteger os dados em trânsito e em repouso.</p>
+          </details>
+          <details>
+            <summary>Posso usar os agentes no meu cliente de IA?</summary>
+            <p>Sim. Além de executar no navegador, podes instalar a SkillHub no teu Agent Client (Claude, Codex, Hermes, entre outros) e usar cada Skill dentro do teu fluxo de trabalho.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <a class="logo" href="#topo">🤖 <span>SkillHub</span></a>
+      <nav class="footer-links">
+        <a href="#agentes">Explorar</a>
+        <a href="#vender">Vender</a>
+        <a href="#porque">Porquê nós</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <p class="copy">© <span id="year"></span> SkillHub. Marketplace de agentes de IA.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
