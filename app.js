@@ -101,6 +101,25 @@ const AGENTS = [
   { name: "ContentMachine 3.0", icon: "⚙️", cat: "Redes sociais", author: "abdul19h", sold: "Novo", soldNum: 0, rating: 5.0, price: "Grátis", free: true, desc: "Acesso antecipado ao agente ContentMachine 3.0: máquina de produção de conteúdo em escala. Link direto em prompts/contentmachine-3.md." },
 ];
 
+const AGENT_EXTRAS = {
+  "ThumbForge": { prompt: "thumbforge.md" },
+  "Fofinho": { prompt: "fofinho.md" },
+  "Furacão": { prompt: "furacao.md" },
+  "Brandão": { prompt: "brandao-gpt.md" },
+  "EstagiáriaGPT": { prompt: "estagiaria-gpt.md" },
+  "MurtaGPT": { prompt: "murta-gpt.md" },
+  "SupremoGPT": { prompt: "supremo-gpt.md" },
+  "FoundationsGPT": { prompt: "foundations-gpt.md" },
+  "PromptPRO": { prompt: "prompt-pro.md" },
+  "Playbook234": { prompt: "playbook234.md" },
+  "Iconoclasta": { prompt: "iconoclasta.md" },
+  "Adaptador de Nicho": { prompt: "adaptador-de-nicho.md" },
+  "Roteirista Reels": { prompt: "roteirista-reels.md" },
+  "VisualPrompt Pro": { prompt: "visualprompt-pro.md" },
+  "Mestre dos Anúncios": { link: "https://chatgpt.com/g/g-67f977338fe48191b505e98f85633b2d-mestre-dos-anuncios-estaticos" },
+  "ContentMachine 3.0": { link: "https://chatgpt.com/g/g-6884e69bc8408191922369dd40" },
+};
+
 let activeCategory = "Tendência";
 
 const chipsEl = document.getElementById("chips");
@@ -159,6 +178,8 @@ function renderAgents() {
         <span class="price${a.free ? " free" : ""}">${a.price}</span>
       </div>
     `;
+    card.title = "Clica para abrir e testar o agente";
+    card.addEventListener("click", () => openAgentModal(a));
     gridEl.appendChild(card);
   });
 
@@ -177,6 +198,115 @@ searchEl.addEventListener("keydown", (e) => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ---------- Modal "testar agente" ---------- */
+
+const backdrop = document.getElementById("modal-backdrop");
+const modalContent = document.getElementById("modal-content");
+let lastPromptText = "";
+
+function openAgentModal(a) {
+  const extra = AGENT_EXTRAS[a.name] || {};
+  const stats = a.soldNum === 0 ? "🆕 novo" : `🛒 ${a.sold} vendidos`;
+  let testSection;
+  if (extra.link) {
+    testSection = `
+      <p>Este agente já está publicado online. Clica no botão para abrir diretamente:</p>
+      <div class="modal-actions">
+        <a class="btn primary small" href="${extra.link}" target="_blank" rel="noopener noreferrer">↗ Abrir agente online</a>
+      </div>`;
+  } else if (extra.prompt) {
+    testSection = `
+      <ol>
+        <li>Clica em <strong>Copiar prompt</strong> abaixo.</li>
+        <li>Vai a <strong>chatgpt.com → Criar um GPT → Configurar → Instructions</strong> (ou "Project instructions" no Claude) e cola lá.</li>
+        <li>Guarda e envia um input de teste no chat.</li>
+      </ol>
+      <div class="modal-actions">
+        <button class="btn primary small" id="copy-prompt" type="button">📋 Copiar prompt</button>
+        <span class="hint-inline">Ficheiro: <code>prompts/${extra.prompt}</code></span>
+      </div>
+      <div class="prompt-box" id="prompt-box">A carregar prompt…</div>`;
+  } else {
+    testSection = `
+      <p>Este é um agente de exemplo da listagem. Para testar um agente com prompt publicado, experimenta o
+      <strong>Fofinho</strong>, o <strong>Brandão</strong>, o <strong>EstagiáriaGPT</strong> ou o <strong>ThumbForge</strong>.</p>`;
+  }
+
+  modalContent.innerHTML = `
+    <div class="modal-head">
+      <div class="modal-icon">${a.icon}</div>
+      <div>
+        <h3>${a.name}</h3>
+        <div class="modal-meta">
+          <span class="cat-tag">${a.cat}</span>
+          <span>by: <strong>${a.author}</strong></span>
+          <span>${stats}</span>
+          <span>⭐ ${a.rating.toFixed(1)}</span>
+          <span class="price${a.free ? " free" : ""}">${a.price}</span>
+        </div>
+      </div>
+    </div>
+    <p class="modal-desc">${a.desc}</p>
+    <h4>🧪 Como testar</h4>
+    <div class="howto">${testSection}</div>
+  `;
+
+  backdrop.hidden = false;
+  document.body.style.overflow = "hidden";
+
+  if (extra.prompt) loadPrompt(extra.prompt);
+  const copyBtn = document.getElementById("copy-prompt");
+  if (copyBtn) copyBtn.addEventListener("click", copyPrompt);
+}
+
+function closeAgentModal() {
+  backdrop.hidden = true;
+  document.body.style.overflow = "";
+}
+
+async function loadPrompt(file) {
+  const box = document.getElementById("prompt-box");
+  try {
+    const res = await fetch(`prompts/${file}`);
+    if (!res.ok) throw new Error(String(res.status));
+    lastPromptText = await res.text();
+    box.textContent = lastPromptText;
+  } catch (e) {
+    lastPromptText = "";
+    box.textContent =
+      `Não consegui carregar prompts/${file} (o fetch é bloqueado quando abres o index.html diretamente com duplo clique). ` +
+      `Solução: serve a pasta com "python3 -m http.server 8000" ou usa o site no GitHub Pages; em alternativa copia o ficheiro prompts/${file} no repositório.`;
+  }
+}
+
+function copyPrompt() {
+  const btn = document.getElementById("copy-prompt");
+  const done = () => {
+    if (!btn) return;
+    btn.textContent = "✅ Copiado!";
+    setTimeout(() => { btn.textContent = "📋 Copiar prompt"; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(lastPromptText).then(done).catch(() => fallbackCopy(done));
+  } else {
+    fallbackCopy(done);
+  }
+}
+
+function fallbackCopy(done) {
+  const ta = document.createElement("textarea");
+  ta.value = lastPromptText;
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); } catch (e) { /* sem clipboard */ }
+  document.body.removeChild(ta);
+  done();
+}
+
+document.getElementById("modal-close").addEventListener("click", closeAgentModal);
+backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closeAgentModal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !backdrop.hidden) closeAgentModal(); });
 
 renderChips();
 renderAgents();
